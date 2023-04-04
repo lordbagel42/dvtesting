@@ -1,1 +1,38 @@
-<a href="https://desktop.vision/app/#/desktop-select/cloudxrip?ip=192.168.0.1">View content in app</a>
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Set CloudPC IP Address</title>
+  </head>
+  <body>
+    <h1>Set CloudPC IP Address</h1>
+    <label for="ip-address">Enter IP address:</label>
+    <input type="text" id="ip-address" name="ip-address">
+    <button id="submit-button">Submit</button>
+    <button id="open-app-button">Open in CloudXR app</button>
+
+    <script>
+      const ipAddressInput = document.getElementById("ip-address");
+      const submitButton = document.getElementById("submit-button");
+      const openAppButton = document.getElementById("open-app-button");
+      const openAppLink = document.createElement("a");
+
+      openAppLink.id = "open-app-link";
+      openAppLink.textContent = "Open in CloudXR app.";
+      openAppLink.href = "https://desktop.vision/app/#/desktop-select/cloudxrip";
+
+      submitButton.addEventListener("click", () => {
+        const ipAddress = ipAddressInput.value;
+        window.cloudPCip = ipAddress;
+        alert(`CloudPC IP address set to ${ipAddress}`);
+      });
+
+      openAppButton.addEventListener("click", () => {
+        const appLink = `https://desktop.vision/app/#/desktop-select/cloudxrip?ip=${window.cloudPCip}`;
+        openAppLink.href = appLink;
+        document.body.appendChild(openAppLink);
+        openAppLink.click();
+      });
+    </script>
+  </body>
+</html>
