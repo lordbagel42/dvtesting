@@ -19,7 +19,7 @@
 
       openAppLink.id = "open-app-link";
       openAppLink.textContent = "Open in CloudXR app.";
-      openAppLink.href = "https://desktop.vision/app/#/desktop-select/cloudxrip";
+      openAppLink.href = "cloudxrapp://cloudxrip";
 
       submitButton.addEventListener("click", () => {
         const ipAddress = ipAddressInput.value;
@@ -28,7 +28,7 @@
       });
 
       openAppButton.addEventListener("click", () => {
-        const appLink = `https://desktop.vision/app/#/desktop-select/cloudxrip?ip=${window.cloudPCip}`;
+        const appLink = `cloudxrapp://cloudxrip?ip=${window.cloudPCip}`;
         openAppLink.href = appLink;
         document.body.appendChild(openAppLink);
         openAppLink.click();
