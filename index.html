@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <title>Set CloudPC IP Address</title>
+    <script src"https://js.desktop.vision/babylon.min.js"></script>
   </head>
   <body>
     <h1>Set CloudPC IP Address</h1>
@@ -10,7 +11,10 @@
     <input type="text" id="ip-address" name="ip-address">
     <button id="submit-button">Submit</button>
     <button id="open-app-button">Open in CloudXR app</button>
-
+    const desktopVisionApiCredentials = { id: "---", key: "---" }
+    const desktopOptions = { scene, camera, sceneContainer, renderer, video }
+    const desktop = new ManagedComputer(desktopOptions, desktopVisionApiCredentials)
+    scene.add(desktop)
     <script>
       const ipAddressInput = document.getElementById("ip-address");
       const submitButton = document.getElementById("submit-button");
