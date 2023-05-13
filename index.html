@@ -1,42 +1,40 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8">
-    <title>Set CloudPC IP Address</title>
-    <script src"https://js.desktop.vision/babylon.min.js"></script>
-  </head>
-  <body>
-    <h1>Set CloudPC IP Address</h1>
-    <label for="ip-address">Enter IP address:</label>
-    <input type="text" id="ip-address" name="ip-address">
-    <button id="submit-button">Submit</button>
-    <button id="open-app-button">Open in CloudXR app</button>
-    const desktopVisionApiCredentials = { id: "---", key: "---" }
-    const desktopOptions = { scene, camera, sceneContainer, renderer, video }
-    const desktop = new ManagedComputer(desktopOptions, desktopVisionApiCredentials)
-    scene.add(desktop)
-    <script>
-      const ipAddressInput = document.getElementById("ip-address");
-      const submitButton = document.getElementById("submit-button");
-      const openAppButton = document.getElementById("open-app-button");
-      const openAppLink = document.createElement("a");
+<html lang="en">
+<head>
+  <script src="https://unpkg.com/@picovoice/porcupine-web/dist/iife/index.js"></script>
+  <script src="https://unpkg.com/@picovoice/web-voice-processor/dist/iife/index.js"></script>
+  <script type="application/javascript">
 
-      openAppLink.id = "open-app-link";
-      openAppLink.textContent = "Open in CloudXR app.";
-      openAppLink.href = "cloudxr://cloudxrip";
+    const PORCUPINE_MODEL_BASE64 = /* Base64 representation of the `.pv` model file*/;
 
-      submitButton.addEventListener("click", () => {
-        const ipAddress = ipAddressInput.value;
-        window.cloudPCip = ipAddress;
-        alert(`CloudPC IP address set to ${ipAddress}`);
+    function keywordDetectionCallback(detection) {
+      console.log(`Porcupine detected ${detection.label}`);
+    }
+
+    function processErrorCallback(error) {
+      console.error(error);
+    }
+
+    async function startPorcupine() {
+      console.log("Porcupine is loading. Please wait...");
+      const accessKey = "dC3j28+q+9l+rWdb6lbYgDzsIsHRUZ3sNmskhQjhodIXjyed4Q2Jwg==" // Obtained from Picovoice Console (picovoice.ai/console/)
+      let porcupine = await PorcupineWeb.PorcupineWorker.create(
+              accessKey,
+              [PorcupineWeb.BuiltInKeyword.Picovoice],
+              porcupineKeywordCallback,
+              { base64: PORCUPINE_MODEL_BASE64 },
+      );
+
+      console.log("Porcupine worker ready!");
+
+      console.log("WebVoiceProcessor initializing. Microphone permissions requested ...");
+      await window.WebVoiceProcessor.WebVoiceProcessor.subscribe(porcupine);
+      console.log("WebVoiceProcessor ready and listening!");
+
+      document.addEventListener("DOMContentLoaded", function () {
+        startPorcupine();
       });
-
-      openAppButton.addEventListener("click", () => {
-        const appLink = `cloudxr://cloudxrip?ip=${window.cloudPCip}`;
-        openAppLink.href = appLink;
-        document.body.appendChild(openAppLink);
-        openAppLink.click();
-      });
-    </script>
-  </body>
+  </script>
+</head>
+<body></body>
 </html>
