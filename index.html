@@ -17,11 +17,11 @@
 
     async function startPorcupine() {
       console.log("Porcupine is loading. Please wait...");
-      const accessKey = "dC3j28+q+9l+rWdb6lbYgDzsIsHRUZ3sNmskhQjhodIXjyed4Q2Jwg=="; // Obtained from Picovoice Console (picovoice.ai/console/)
+      const accessKey = "dC3j28+q+9l+rWdb6lbYgDzsIsHRUZ3sNmskhQjhodIXjyed4Q2Jwg==" // Obtained from Picovoice Console (picovoice.ai/console/)
       let porcupine = await PorcupineWeb.PorcupineWorker.create(
               accessKey,
               [PorcupineWeb.BuiltInKeyword.Picovoice],
-              keywordDetectionCallback,
+              porcupineKeywordCallback,
               { base64: PORCUPINE_MODEL_BASE64 },
       );
 
@@ -30,11 +30,10 @@
       console.log("WebVoiceProcessor initializing. Microphone permissions requested ...");
       await window.WebVoiceProcessor.WebVoiceProcessor.subscribe(porcupine);
       console.log("WebVoiceProcessor ready and listening!");
-    }
 
-    document.addEventListener("DOMContentLoaded", function () {
-      startPorcupine();
-    });
+      document.addEventListener("DOMContentLoaded", function () {
+        startPorcupine();
+      });
   </script>
 </head>
 <body></body>
